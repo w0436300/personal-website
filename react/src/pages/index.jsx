@@ -3,7 +3,7 @@ import Typed from 'typed.js';
 import {
   Award,
   Camera,
-  Target,
+  Waves,
   Palette,
   Code,
   BarChart3,
@@ -13,6 +13,8 @@ import {
   FileText,
   Github,
   Linkedin,
+  Sparkles,
+  RefreshCw,
 } from 'lucide-react';
 import { useScrollToHash } from '../hooks/useScrollToHash.js';
 import { projects, CATEGORIES } from '../data/projects.js';
@@ -39,10 +41,25 @@ const SectionLabel = ({ number, text, className = '' }) => (
 
 const COLORS = ['bg-[#EEF2FF]', 'bg-[#F0FDF4]', 'bg-[#FFF7ED]', 'bg-[#F5F3FF]'];
 
+function getProjectUrl(p) {
+  const url = p.demoUrl || p.repoUrl || p.externalUrl;
+  return url && url.trim() ? url.trim() : null;
+}
+
 export function HomePage() {
   useScrollToHash();
   const typedNameRef = useRef(null);
   const [activeCategory, setActiveCategory] = useState('All');
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
+
+  useEffect(() => {
+    if (!showUpdateModal) return;
+    const onEscape = (e) => {
+      if (e.key === 'Escape') setShowUpdateModal(false);
+    };
+    window.addEventListener('keydown', onEscape);
+    return () => window.removeEventListener('keydown', onEscape);
+  }, [showUpdateModal]);
 
   useEffect(() => {
     if (!typedNameRef.current) return;
@@ -59,7 +76,9 @@ export function HomePage() {
   const filteredProjects =
     activeCategory === 'All'
       ? projects
-      : projects.filter((p) => p.category === activeCategory);
+      : projects.filter((p) =>
+          Array.isArray(p.categories) ? p.categories.includes(activeCategory) : p.category === activeCategory
+        );
 
   return (
     <>
@@ -91,13 +110,18 @@ export function HomePage() {
           </p>
           <div className="flex flex-wrap items-center gap-6 text-gray-300">
             <div className="flex items-center gap-2">
-              <Target size={18} className="text-blue-600/30" />
-              <span className="text-[10px] font-bold uppercase tracking-widest">Archer</span>
+              <Waves size={18} className="text-blue-600/30" />
+              <span className="text-[10px] font-bold uppercase tracking-widest">Surfer</span>
             </div>
             <div className="h-4 w-[1px] bg-gray-100" />
             <div className="flex items-center gap-2">
               <Camera size={18} className="text-blue-600/30" />
               <span className="text-[10px] font-bold uppercase tracking-widest">Photographer</span>
+            </div>
+            <div className="h-4 w-[1px] bg-gray-100" />
+            <div className="flex items-center gap-2">
+              <RefreshCw size={18} className="text-blue-600/30 animate-spin-slow" />
+              <span className="text-[10px] font-bold uppercase tracking-widest">Continuous Learner</span>
             </div>
           </div>
         </div>
@@ -114,23 +138,44 @@ export function HomePage() {
             <div className="group bg-white p-10 rounded-[2rem] border border-gray-100 hover:border-blue-600 transition-all duration-500 hover:shadow-xl hover:shadow-gray-200/40">
               <Palette size={24} className="mb-8 text-blue-600" />
               <h3 className="text-2xl font-black mb-4 tracking-tight">UX Design</h3>
-              <p className="text-gray-500 text-sm leading-relaxed mb-8">
+              <p className="text-gray-500 text-sm leading-relaxed mb-6">
                 Applying Google UX methodologies to create human-centric products.
               </p>
+              <div className="flex flex-wrap gap-2">
+                {['Figma', 'Adobe XD', 'Miro', 'User Research', 'Wireframing', 'Prototyping'].map((tool) => (
+                  <span key={tool} className="px-2.5 py-1 rounded-lg bg-blue-50 text-blue-700 text-[11px] font-medium">
+                    {tool}
+                  </span>
+                ))}
+              </div>
             </div>
             <div className="group bg-white p-10 rounded-[2rem] border border-gray-100 hover:border-blue-600 transition-all duration-500 hover:shadow-xl hover:shadow-gray-200/40">
               <Code size={24} className="mb-8 text-emerald-600" />
               <h3 className="text-2xl font-black mb-4 tracking-tight">Engineering</h3>
-              <p className="text-gray-500 text-sm leading-relaxed mb-8">
+              <p className="text-gray-500 text-sm leading-relaxed mb-6">
                 Building robust front-end interfaces with React and modern web tools.
               </p>
+              <div className="flex flex-wrap gap-2">
+                {['React', 'JavaScript', 'TypeScript', 'HTML/CSS', 'Tailwind', 'Vite', 'Node.js'].map((tool) => (
+                  <span key={tool} className="px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-700 text-[11px] font-medium">
+                    {tool}
+                  </span>
+                ))}
+              </div>
             </div>
             <div className="group bg-white p-10 rounded-[2rem] border border-gray-100 hover:border-blue-600 transition-all duration-500 hover:shadow-xl hover:shadow-gray-200/40">
               <BarChart3 size={24} className="mb-8 text-amber-600" />
               <h3 className="text-2xl font-black mb-4 tracking-tight">Data</h3>
-              <p className="text-gray-500 text-sm leading-relaxed mb-8">
+              <p className="text-gray-500 text-sm leading-relaxed mb-6">
                 Visualizing behavior and patterns to drive design improvements.
               </p>
+              <div className="flex flex-wrap gap-2">
+                {['Power BI', 'Tableau', 'D3.js', 'Recharts', 'SQL', 'Python', 'Google Analytics'].map((tool) => (
+                  <span key={tool} className="px-2.5 py-1 rounded-lg bg-amber-50 text-amber-700 text-[11px] font-medium">
+                    {tool}
+                  </span>
+                ))}
+              </div>
             </div>
           </div>
         </div>
@@ -153,46 +198,98 @@ export function HomePage() {
             ))}
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredProjects.slice(0, 9).map((p, i) => (
-              <a
-                key={p.id}
-                href={p.repoUrl || p.externalUrl || p.demoUrl || '#'}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`group block p-8 rounded-[2rem] border border-gray-100 hover:border-blue-600 transition-all duration-500 hover:shadow-xl ${COLORS[i % COLORS.length]}`}
-              >
-                <div className="flex justify-between items-start mb-4">
-                  <span className="text-[10px] font-mono text-gray-500 uppercase">
-                    {p.category}
-                  </span>
-                  <ArrowUpRight size={18} className="text-gray-400 group-hover:text-blue-600 transition-colors" />
-                </div>
-                <h3 className="text-xl font-black mb-2 tracking-tight">{p.title}</h3>
-                <p className="text-gray-500 text-sm leading-relaxed mb-4 line-clamp-2">
-                  {p.description}
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {p.tags.slice(0, 3).map((tag) => (
-                    <span
-                      key={tag}
-                      className="px-2 py-0.5 rounded-md bg-white/80 text-[10px] font-medium text-gray-600"
-                    >
-                      {tag}
+            {filteredProjects.slice(0, 9).map((p, i) => {
+              const projectUrl = getProjectUrl(p);
+              return (
+                <button
+                  key={p.id}
+                  type="button"
+                  onClick={() => {
+                    if (projectUrl) {
+                      const url = projectUrl.startsWith('http') ? projectUrl : `${BASE}${projectUrl.startsWith('/') ? projectUrl.slice(1) : projectUrl}`;
+                      window.open(url, '_blank', 'noopener,noreferrer');
+                    } else {
+                      setShowUpdateModal(true);
+                    }
+                  }}
+                  className={`group block w-full text-left p-8 rounded-[2rem] border border-gray-100 hover:border-blue-600 transition-all duration-500 hover:shadow-xl cursor-pointer ${COLORS[i % COLORS.length]}`}
+                >
+                  <div className="flex justify-between items-start mb-4">
+                    <span className="text-[10px] font-mono text-gray-500 uppercase">
+                      {Array.isArray(p.categories) ? p.categories.join(' & ') : p.category}
                     </span>
-                  ))}
-                </div>
-                {p.cover && (
-                  <div className="mt-6 aspect-video rounded-xl overflow-hidden bg-white/50">
-                    <img
-                      src={`${BASE}${p.cover.startsWith('/') ? p.cover.slice(1) : p.cover}`}
-                      alt=""
-                      className="w-full h-full object-cover"
-                    />
+                    <ArrowUpRight size={18} className="text-gray-400 group-hover:text-blue-600 transition-colors" />
                   </div>
-                )}
-              </a>
-            ))}
+                  <h3 className="text-xl font-black mb-2 tracking-tight">{p.title}</h3>
+                  <p className="text-gray-500 text-sm leading-relaxed mb-4 line-clamp-2">
+                    {p.description}
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {p.tags.slice(0, 3).map((tag) => (
+                      <span
+                        key={tag}
+                        className="px-2 py-0.5 rounded-md bg-white/80 text-[10px] font-medium text-gray-600"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                  {p.cover ? (
+                    <div className="mt-6 aspect-video rounded-xl overflow-hidden bg-white/50">
+                      <img
+                        src={`${BASE}${p.cover.startsWith('/') ? p.cover.slice(1) : p.cover}`}
+                        alt=""
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  ) : p.placeholderLabel ? (
+                    <div className="mt-6 aspect-video rounded-xl bg-gray-100 border border-gray-200 border-dashed flex flex-col items-center justify-center gap-1 p-4 text-center">
+                      <span className="text-sm font-bold text-gray-600 line-clamp-2">{p.title}</span>
+                      <span className="text-xs font-medium text-amber-600 uppercase tracking-wider">
+                        {p.placeholderLabel}
+                      </span>
+                    </div>
+                  ) : null}
+                </button>
+              );
+            })}
           </div>
+
+          {/* Modal when project link is unavailable */}
+          {showUpdateModal && (
+            <div
+              className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50"
+              onClick={() => setShowUpdateModal(false)}
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="update-modal-title"
+            >
+              <div
+                className="bg-white rounded-2xl shadow-xl max-w-md w-full p-8 text-center"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <div className="flex justify-center mb-4">
+                  <span className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-amber-100 text-amber-500">
+                    <Sparkles size={32} strokeWidth={1.5} />
+                  </span>
+                </div>
+                <h3 id="update-modal-title" className="text-xl font-bold text-gray-900 mb-4">
+                  Notice
+                </h3>
+                <p className="text-gray-600 mb-6">
+                  The website is being updated and will be available as soon as possible. Thank you for
+                  your patience.
+                </p>
+                <button
+                  type="button"
+                  onClick={() => setShowUpdateModal(false)}
+                  className="px-6 py-2.5 bg-black text-white rounded-xl text-sm font-bold uppercase tracking-wider hover:bg-blue-600 transition-colors"
+                >
+                  OK
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </section>
 

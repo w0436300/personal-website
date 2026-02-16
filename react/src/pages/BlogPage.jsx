@@ -5,11 +5,13 @@ import {
   Camera,
   Award,
   Quote,
+  ChevronLeft,
+  ChevronRight,
 } from 'lucide-react';
 
 const BASE = import.meta.env.BASE_URL || '/';
 const PERSONAL_PHOTO = `${BASE}img/photo.png`;
-const CERTIFICATE_IMAGE = `${BASE}img/certificate.png`;
+const CERTIFICATE_IMAGES = [`${BASE}img/certificate.png`];
 
 const GALLERY_IMGS = ['img/gallery/photo1.jpg', 'img/gallery/photo2.jpg', 'img/gallery/photo3.jpg', 'img/gallery/photo4.jpg'];
 
@@ -42,6 +44,9 @@ const SectionLabel = ({ number, text }) => (
 
 export default function BlogPage() {
   const [galleryThree, setGalleryThree] = useState(() => pickRandomGalleryThree());
+  const [certIndex, setCertIndex] = useState(0);
+  const certImages = CERTIFICATE_IMAGES;
+  const hasMultipleCerts = certImages.length > 1;
 
   useEffect(() => {
     const id = setInterval(() => setGalleryThree(pickRandomGalleryThree()), 5000);
@@ -165,11 +170,12 @@ export default function BlogPage() {
           <section>
             <SectionLabel number="03" text="Recognition" />
             <div className="space-y-6">
-              <div className="group cursor-pointer">
+              <div className="group relative">
                 <div className="aspect-[4/3] bg-zinc-900 rounded-3xl overflow-hidden mb-4 relative">
                   <img
-                    src={CERTIFICATE_IMAGE}
-                    alt="Google UX Design Professional Certificate"
+                    key={certIndex}
+                    src={certImages[certIndex]}
+                    alt="Certificate"
                     className="w-full h-full object-cover opacity-60 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
                   />
                   <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
@@ -178,6 +184,26 @@ export default function BlogPage() {
                       size={60}
                     />
                   </div>
+                  {hasMultipleCerts && (
+                    <>
+                      <button
+                        type="button"
+                        onClick={() => setCertIndex((i) => (i - 1 + certImages.length) % certImages.length)}
+                        className="absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/90 hover:bg-white text-zinc-800 flex items-center justify-center shadow-lg transition-colors"
+                        aria-label="Previous certificate"
+                      >
+                        <ChevronLeft size={24} />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setCertIndex((i) => (i + 1) % certImages.length)}
+                        className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/90 hover:bg-white text-zinc-800 flex items-center justify-center shadow-lg transition-colors"
+                        aria-label="Next certificate"
+                      >
+                        <ChevronRight size={24} />
+                      </button>
+                    </>
+                  )}
                 </div>
                 <h4 className="font-black text-sm uppercase tracking-wider mb-1">
                   Google UX Professional

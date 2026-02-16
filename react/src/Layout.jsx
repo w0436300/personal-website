@@ -236,6 +236,8 @@ export default function Layout() {
 
       <style>{`
         html { scroll-behavior: smooth; }
+        @keyframes spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .animate-spin-slow { animation: spin-slow 8s linear infinite; }
         @media (max-width: 767px) {
           .sidebar-mobile-nav { display: flex !important; }
           main { padding-left: 0 !important; }
