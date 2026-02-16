@@ -37,7 +37,7 @@ jobs:
         working-directory: react
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@3
+        uses: actions/upload-pages-artifact@v3
         with:
           path: react/dist
 
@@ -47,4 +47,4 @@ jobs:
     environment: github-pages
     steps:
       - name: Deploy
-        uses: actions/deploy-pages@4
+        uses: actions/deploy-pages@v4
