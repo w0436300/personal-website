@@ -36,6 +36,10 @@ jobs:
         run: npm run build:pages
         working-directory: react
 
+      - name: SPA fallback for GitHub Pages
+        run: cp react/dist/index.html react/dist/404.html
+        working-directory: .
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
