@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="./api.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="search my-3">
+                <input type="text" class="form-control" placeholder="Enter city name" spellcheck="false">
+                <button class="btn btn-primary mt-2"><img src="images/search.png"></button>
+            </div>
+            <div class="error">
+                <p>Invalid city name</p>
+            </div>
+            <div class="weather">
+                <img src="images/rain.png" class="weather-icon">
+                <h1 class="temp">22°</h1>
+                <h2 class="city">Halifax</h2>
+                <div class="details row">
+                    <div class="col text-center">
+                        <img src="images/humidity.png">
+                        <div>
+                            <p class="humidity">50%</p>
+                            <p>Humidity</p>
+                        </div>
+                    </div>
+                    <div class="col text-center">
+                        <img src="images/wind.png">
+                        <div>
+                            <p class="wind">50%</p>
+                            <p>Wind Speed</p>
+                        </div>
+                    </div>
+                    <div class="col text-center">
+                        <img src="images/sunrise.png">
+                        <div>
+                            <p class="sunrise">5:00AM</p>
+                            <p>Sunrise</p>
+                        </div>
+                    </div>
+                    <div class="col text-center">
+                        <img src="images/sunset.png">
+                        <div>
+                            <p class="sunset">7:00PM</p>
+                            <p>Sunset</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

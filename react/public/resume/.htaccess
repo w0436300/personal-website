@@ -1,0 +1,5 @@
+<IfModule mod_headers.c>
+  <FilesMatch "\.pdf$">
+    Header set X-Robots-Tag "noindex, nofollow, nosnippet"
+  </FilesMatch>
+</IfModule>

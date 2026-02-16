@@ -1,0 +1,12 @@
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # Old URL: /portfolio/resume.html -> /resume (301)
+  RewriteRule ^portfolio/resume\.html$ /resume [R=301,L]
+
+  # SPA fallback: existing files/dirs served as-is (css, js, img, resume, projects, assets)
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule . /index.html [L]
+</IfModule>

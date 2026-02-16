@@ -1,0 +1,70 @@
+{
+        "canToggle": true,
+        "currentState": 0,
+        "correctState": 1
+      },
+      {
+        "canToggle": false,
+        "currentState": 2,
+        "correctState": 2
+      },
+     - state:
+        0 white
+        1 blue
+        2 gray
+     - currentState have 3 state
+       0 or 1 or 2
+     - correctState
+        0 or 1 or 2
+     - canToggle
+        true  click 0 1 2
+        false unclick,  1 or 2
+current:
+        [0,1,0,0,0,0]
+        [0,0,0,2,2,0]
+        [1,0,2,0,0,0]
+        [1,0,0,0,1,0]
+        [0,0,1,0,1,1]
+        [0,0,0,0,0,0]
+   
+correct:
+        [2,1,2,1,1,2]
+        [2,1,1,2,2,1]
+        [1,2,2,1,2,1]
+        [1,1,2,2,1,2]
+        [2,2,1,2,1,1]
+        [1,2,1,1,2,2]
+        
+canToggle = true; 
+
+currentState === correctState
+--So far so good
+
+currentstate = 0
+--incomplete -- Something is wrong
+
+checkbox-- incorrect squares
+show incorrect squares
+
+if currentState !== correctState
+
+Innovative Feature
+add time when start
+<p id = 'demo'></p>
+        <button id = 'stop'> stop</button>
+        <button id = 'start'> start </button>
+
+https://medium.com/codebakery/create-a-stopwatch-by-using-setinterval-6ae02af51744
+let myInterval = setInterval(myTimer, 1000);
+let i = 0;
+function myTimer() {
+  document.getElementById("demo").innerHTML = i;
+  i++;
+}
+document.getElementById('stop').addEventListener('click',function(){
+    clearInterval(myInterval);
+    myInterval = null; //clean myInterval
+})
+document.getElementById('start').addEventListener('click',function(){
+    myInterval = setInterval(myTimer, 1000);
+})

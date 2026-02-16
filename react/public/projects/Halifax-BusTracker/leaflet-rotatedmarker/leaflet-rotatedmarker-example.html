@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <title>Leaflet rotated marker example</title>
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      height: 100%;
+    }
+
+    #map {
+      width: 100%;
+      height: 100%;
+    }
+
+    .leaflet-popup-content-wrapper,
+    .leaflet-popup-tip {
+      background: #f6f965;
+      color: #bc3535;
+      box-shadow: 0 3px 14px rgba(0, 0, 0, 0.4);
+    }
+  </style>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/leaflet-rotatedmarker@0.2.0/leaflet.rotatedMarker.min.js"></script>
+</head>
+
+<body>
+  <div id="map"></div>
+  <script>
+    let shapeStyle = {
+      color: 'black',
+      weight: 0.5,
+      fillColor: '#f03',
+      fillOpacity: 0.5,
+      radius: 500
+    };
+
+    (function () {
+      const map = L.map('map', {
+        center: [48.8631169, 2.3708919],
+        zoom: 17,
+        layers: [
+          L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+          })
+        ]
+      });
+      //     var circle = L.circle([48.8631169, 2.3708919],50, {
+      //       color: 'black',
+      //       weight:0.5,
+      //       fillColor: '#f03',
+      //       fillOpacity: 0.5,
+      //       radius: 500
+      //   }).addTo(map).bindPopup('This is a circle');
+
+
+      //   var polygon = L.polygon([
+      //     [48.863641838029565, 2.367679024486847],
+      //     [48.859806946812114, 2.366471176697104],
+      //     [ 48.86191444592211, 2.3705673561591425]
+      // ],shapeStyle).addTo(map).bindPopup('This is a shape');
+
+      L.marker(map.getCenter(), {
+          rotationAngle: 45,
+          draggable: true
+      }).addTo(map)
+
+      //   .bindPopup('This marker has been rotated 45 degrees.')
+      //   .openPopup();
+      let popup = L.popup();
+
+     
+      var greenIcon = L.icon({
+        iconUrl: 'bus.png',
+        iconSize: [60, 49], // size of the icon
+        iconAnchor: [20, 35], // point of the icon which will correspond to marker's location
+        popupAnchor: [10, -50], // point from which the popup should open relative to the iconAnchor
+      });
+
+      // var blackIcon = L.icon({
+      //   iconUrl: 'bus.png',
+      //   iconSize:     [70, 70], // size of the icon
+      //   iconAnchor:   [20, 30], // point of the icon which will correspond to marker's location
+      //   popupAnchor:  [15, -40], // point from which the popup should open relative to the iconAnchor
+
+      // });
+
+      // // L.marker([48.8631169, 2.3727019],{icon:blackIcon}).addTo(map).bindPopup("This is a new mark");
+      // L.marker([48.8639169, 2.3727019],{icon:greenIcon}).addTo(map).bindPopup("This is a bus mark");
+      // L.marker([48.8630169, 2.3717019],{icon:blackIcon}).addTo(map).bindPopup("This is a Second mark");
+      let geoJSON = {"type": "FeatureCollection","features": [{"type": "Feature","properties": {},"geometry": {"coordinates": [[[2.367679024486847,48.863641838029565],[2.366471176697104,48.859806946812114],[2.3705673561591425,48.86191444592211],[2.367679024486847,48.863641838029565]]],"type": "Polygon"}},{"type": "Feature","properties": {},"geometry": {"coordinates": [[2.3579831576236074,48.87343500881846],[2.35576706102961,48.86933539384185],[2.3536894704726308,48.86587323514817],[2.352027398027559,48.86304866511074],[2.3545205066955646,48.86259307436791],[2.358121663660654,48.86104403482108],[2.360891784402753,48.86286642931148],[2.3638004111827513,48.861864120553264],[2.3656009896648698,48.86295754729409],[2.36504696551674,48.86596434765633],[2.362415350811659,48.86796878086767],[2.3664320258878035,48.87206850781703],[2.3583986757346906,48.87416379409126]],"type": "LineString"}},{"type": "Feature","properties": {},"geometry": {"coordinates": [[[2.3791189942954247,48.87334723597286],[2.3807810667413776,48.86906540057774],[2.3910305134884595,48.8698853548708],[2.3900609712285075,48.87389382688127],[2.3785649701473233,48.87717324692764],[2.3735787528111985,48.87617122472193],[2.3791189942954247,48.87334723597286]]],"type": "Polygon"},"id": 2},{"type": "Feature","properties": {},"geometry": {"coordinates": [2.3748281421157174,48.869618160980366],"type": "Point"}},{"type": "Feature","properties": {},"geometry": {"coordinates": [2.369309023819852,48.86872453168266],"type": "Point"}}]}
+      L.geoJSON(geoJSON,{
+        style : function(feature){
+          return{
+            color: "red",
+            weight: 0.5
+          }
+        },
+        pointToLayer: function(geoJsonPoint, latlng){
+          return L.marker(latlng,{
+              icon: greenIcon
+            })
+        },
+        onEachFeature: function(feature, layer){
+          if(feature.geometry.type === 'Point'){
+            layer.bindPopup('Hello')
+          }
+        }
+      },).addTo(map);
+
+
+
+
+
+
+    })();
+  </script>
+</body>
+
+</html>
