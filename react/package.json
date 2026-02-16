@@ -6,9 +6,11 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "build:pages": "cross-env BASE_PATH=/personal-website/ vite build",
     "preview": "vite preview"
   },
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "typescript": "~5.9.3",
     "vite": "^7.3.1"
   },
