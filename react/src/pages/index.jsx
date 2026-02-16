@@ -23,15 +23,15 @@ export function ResumePage() {
   const pdfHref = `${baseTrim || ''}/resume/resume-new.pdf`;
 
   return (
-    <div className="container">
-      <h1 className="text-center mt-2">Resume</h1>
-      <div className="text-center mt-4">
+    <div className="max-w-6xl mx-auto px-4">
+      <h1 className="text-center mt-4 text-2xl font-bold text-gray-900">Resume</h1>
+      <div className="text-center mt-6">
         <a
           href={pdfHref}
           download="resume-new.pdf"
           target="_blank"
           rel="noopener noreferrer"
-          className="btn btn-light"
+          className="inline-block px-4 py-2 bg-gray-100 border border-gray-300 rounded hover:bg-gray-200 transition-colors"
         >
           Download Resume
         </a>
@@ -42,13 +42,13 @@ export function ResumePage() {
         width="100%"
         height={900}
         style={{ border: 0 }}
-        className="d-none d-md-block mt-3"
+        className="hidden md:block mt-4"
       />
       <iframe
         src={pdfHref}
         title="Resume PDF (mobile)"
         style={{ width: '100%', height: 300, border: 0 }}
-        className="d-block d-md-none mt-3"
+        className="block md:hidden mt-4"
       />
     </div>
   );

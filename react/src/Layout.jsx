@@ -14,7 +14,7 @@ function Nav() {
   const isHome = location.pathname === '/' || location.pathname === '';
 
   return (
-    <nav style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', padding: '0.5rem' }}>
+    <nav className="flex gap-4 flex-wrap p-2">
       {navItems.map((item) => {
         if (item.type === 'route') {
           return (
@@ -50,11 +50,8 @@ function Nav() {
 
 function Footer() {
   return (
-    <footer style={{ marginTop: '2rem', padding: '1rem', textAlign: 'center' }}>
-      <div className="bg-amber-100 text-amber-900 px-2 py-1 rounded text-sm inline-block mb-2">
-        Tailwind OK
-      </div>
-      <small>© Claire</small>
+    <footer className="mt-8 p-4 text-center">
+      <small className="text-gray-600">© Claire</small>
     </footer>
   );
 }
@@ -63,7 +60,7 @@ export default function Layout() {
   return (
     <>
       <Nav />
-      <main style={{ padding: '1rem' }}>
+      <main className="p-4">
         <Outlet />
       </main>
       <Footer />

@@ -2,6 +2,18 @@
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
 }
 
+/* Typed.js typewriter cursor */
+.typed-cursor {
+  opacity: 1;
+  animation: typed-blink 0.7s infinite;
+}
+@keyframes typed-blink {
+  50% { opacity: 0; }
+}
+.typed-text {
+  display: inline;
+}
+
 .custom-bg {
   background: #ffffff;
   animation: none;
