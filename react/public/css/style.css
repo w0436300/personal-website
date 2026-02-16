@@ -19,7 +19,8 @@
   animation: none;
 }
 
-.hidden {
+/* 改用 .invisible 避免与 Tailwind 的 .hidden (display:none) 冲突 */
+.invisible-opacity {
   opacity: 0;
 }
 
@@ -133,7 +134,7 @@ li.nav-item a:hover::after {
   color: #85677A !important;
 }
 
-#about, #contact {
+#about {
   background: #ffffff;
   animation: none;
 }

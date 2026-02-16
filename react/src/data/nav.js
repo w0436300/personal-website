@@ -6,4 +6,4 @@ export const navItems = [
   { label: 'RESUME', type: 'route', path: '/resume' },
 ];
 
-export const ANCHOR_IDS = ['about', 'skills', 'project', 'contact'];
+export const ANCHOR_IDS = ['home', 'skills', 'project', 'contact'];
