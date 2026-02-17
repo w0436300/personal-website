@@ -11,7 +11,11 @@ import {
 
 const BASE = import.meta.env.BASE_URL || '/';
 const PERSONAL_PHOTO = `${BASE}img/photo.png`;
-const CERTIFICATE_IMAGES = [`${BASE}img/certificate.png`];
+const CERTIFICATE_IMAGES = [
+  `${BASE}img/certificate.png`,
+  `${BASE}img/certificate2.jpg`,
+  `${BASE}img/certificate3.jpg`,
+];
 
 const GALLERY_IMGS = ['img/gallery/photo1.jpg', 'img/gallery/photo2.jpg', 'img/gallery/photo3.jpg', 'img/gallery/photo4.jpg'];
 

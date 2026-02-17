@@ -137,10 +137,14 @@ export default function Layout() {
                   navigate('/blog');
                   setIsMobileMenuOpen(false);
                 }}
-                className={`group flex items-center gap-4 transition-all w-full text-left ${isSidebarCollapsed ? 'justify-center' : ''} ${location.pathname === '/blog' ? 'text-blue-600' : 'text-gray-400 hover:text-black'}`}
+                className={`group flex items-center gap-4 transition-all w-full text-left ${
+                  isSidebarCollapsed ? 'justify-center' : ''
+                } ${location.pathname === '/blog' ? 'text-amber-500' : 'text-amber-400 hover:text-amber-500'}`}
               >
                 <span
-                  className={`transition-colors shrink-0 ${location.pathname === '/blog' ? 'text-blue-600' : 'text-gray-200 group-hover:text-blue-600'}`}
+                  className={`transition-colors shrink-0 ${
+                    location.pathname === '/blog' ? 'text-amber-500' : 'text-amber-300 group-hover:text-amber-500'
+                  }`}
                 >
                   <BookOpen size={18} />
                 </span>
@@ -169,13 +173,27 @@ export default function Layout() {
         <button type="button" onClick={goHome} className="text-xl font-black tracking-tighter">
           XP.
         </button>
-        <button
-          type="button"
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="text-black p-1"
-        >
-          {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            onClick={() => navigate('/blog')}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider transition-colors ${
+              location.pathname === '/blog'
+                ? 'bg-amber-100 text-amber-600'
+                : 'bg-amber-50 text-amber-500 hover:bg-amber-100'
+            }`}
+          >
+            <BookOpen size={14} />
+            Blog
+          </button>
+          <button
+            type="button"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="text-black p-1"
+          >
+            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
       </nav>
 
       {/* Mobile menu overlay */}
@@ -207,7 +225,9 @@ export default function Layout() {
                 navigate('/blog');
                 setIsMobileMenuOpen(false);
               }}
-              className="flex items-center gap-4 text-left text-gray-600 hover:text-blue-600"
+              className={`flex items-center gap-4 text-left ${
+                location.pathname === '/blog' ? 'text-amber-500' : 'text-amber-400 hover:text-amber-500'
+              }`}
             >
               <BookOpen size={20} />
               <span className="text-sm font-bold uppercase tracking-wider">Blog</span>
