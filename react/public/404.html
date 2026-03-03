@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Redirecting…</title>
+    <script>
+      // SPA fallback for GitHub Pages.
+      // Redirects /foo/bar to /?p=/foo/bar so index.html can restore it.
+      (function () {
+        var l = window.location;
+        var base = l.pathname.split('/').slice(0, -1).join('/') + '/';
+        var path = l.pathname.replace(base, '/');
+        var q = l.search ? '&q=' + encodeURIComponent(l.search.slice(1)) : '';
+        var h = l.hash ? '&h=' + encodeURIComponent(l.hash.slice(1)) : '';
+        l.replace(base + '?p=' + encodeURIComponent(path) + q + h);
+      })();
+    </script>
+  </head>
+  <body></body>
+</html>
+

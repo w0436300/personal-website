@@ -7,6 +7,24 @@
     <title>Claire</title>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" />
     <link rel="stylesheet" href="%BASE_URL%css/style.css" />
+    <script>
+      // GitHub Pages SPA redirect restore.
+      // If we were redirected from 404.html with ?p=..., restore the original pathname.
+      (function () {
+        var l = window.location;
+        if (!l.search || l.search.indexOf('?p=') !== 0) return;
+        var params = new URLSearchParams(l.search);
+        var p = params.get('p');
+        var q = params.get('q');
+        var h = params.get('h');
+        if (!p) return;
+        var base = l.pathname; // already includes BASE_URL
+        var newPath = base.replace(/\/$/, '') + decodeURIComponent(p);
+        var newQuery = q ? '?' + decodeURIComponent(q) : '';
+        var newHash = h ? '#' + decodeURIComponent(h) : '';
+        window.history.replaceState(null, '', newPath + newQuery + newHash);
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

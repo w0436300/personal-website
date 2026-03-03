@@ -13,9 +13,9 @@ import {
   FileText,
   Github,
   Linkedin,
-  Sparkles,
   RefreshCw,
 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { useScrollToHash } from '../hooks/useScrollToHash.js';
 import { projects, CATEGORIES } from '../data/projects.js';
 
@@ -41,25 +41,11 @@ const SectionLabel = ({ number, text, className = '' }) => (
 
 const COLORS = ['bg-[#EEF2FF]', 'bg-[#F0FDF4]', 'bg-[#FFF7ED]', 'bg-[#F5F3FF]'];
 
-function getProjectUrl(p) {
-  const url = p.demoUrl || p.repoUrl || p.externalUrl;
-  return url && url.trim() ? url.trim() : null;
-}
-
 export function HomePage() {
   useScrollToHash();
   const typedNameRef = useRef(null);
   const [activeCategory, setActiveCategory] = useState('All');
-  const [showUpdateModal, setShowUpdateModal] = useState(false);
-
-  useEffect(() => {
-    if (!showUpdateModal) return;
-    const onEscape = (e) => {
-      if (e.key === 'Escape') setShowUpdateModal(false);
-    };
-    window.addEventListener('keydown', onEscape);
-    return () => window.removeEventListener('keydown', onEscape);
-  }, [showUpdateModal]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!typedNameRef.current) return;
@@ -199,18 +185,12 @@ export function HomePage() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredProjects.slice(0, 9).map((p, i) => {
-              const projectUrl = getProjectUrl(p);
               return (
                 <button
                   key={p.id}
                   type="button"
                   onClick={() => {
-                    if (projectUrl) {
-                      const url = projectUrl.startsWith('http') ? projectUrl : `${BASE}${projectUrl.startsWith('/') ? projectUrl.slice(1) : projectUrl}`;
-                      window.open(url, '_blank', 'noopener,noreferrer');
-                    } else {
-                      setShowUpdateModal(true);
-                    }
+                    navigate(`/project/${p.id}`);
                   }}
                   className={`group block w-full text-left p-8 rounded-[2rem] border border-gray-100 hover:border-blue-600 transition-all duration-500 hover:shadow-xl cursor-pointer ${COLORS[i % COLORS.length]}`}
                 >
@@ -254,42 +234,6 @@ export function HomePage() {
               );
             })}
           </div>
-
-          {/* Modal when project link is unavailable */}
-          {showUpdateModal && (
-            <div
-              className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50"
-              onClick={() => setShowUpdateModal(false)}
-              role="dialog"
-              aria-modal="true"
-              aria-labelledby="update-modal-title"
-            >
-              <div
-                className="bg-white rounded-2xl shadow-xl max-w-md w-full p-8 text-center"
-                onClick={(e) => e.stopPropagation()}
-              >
-                <div className="flex justify-center mb-4">
-                  <span className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-amber-100 text-amber-500">
-                    <Sparkles size={32} strokeWidth={1.5} />
-                  </span>
-                </div>
-                <h3 id="update-modal-title" className="text-xl font-bold text-gray-900 mb-4">
-                  Notice
-                </h3>
-                <p className="text-gray-600 mb-6">
-                  The website is being updated and will be available as soon as possible. Thank you for
-                  your patience.
-                </p>
-                <button
-                  type="button"
-                  onClick={() => setShowUpdateModal(false)}
-                  className="px-6 py-2.5 bg-black text-white rounded-xl text-sm font-bold uppercase tracking-wider hover:bg-blue-600 transition-colors"
-                >
-                  OK
-                </button>
-              </div>
-            </div>
-          )}
         </div>
       </section>
 
